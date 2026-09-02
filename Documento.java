@@ -20,19 +20,6 @@ public abstract class Documento {
     }
 
     //getters
-    public int getPaginas(int paginas){
-        this.paginas = paginas;
-
-    }
-
-    public CodigoCurso getCodigoCurso(CodigoCurso codigoCurso){
-        this.codigoCurso = codigoCurso;
-
-
-    } 
-
-    public String getCriador(){
-        this.criador = criador;
-    }
+    
     //hascode
 }
