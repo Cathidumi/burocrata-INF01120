@@ -31,6 +31,29 @@ public abstract class Documento {
     public String getCriador(){
         return this.criador;
     }
+
+    //equals
+    @Override
+    public boolean equals(Object o){
+        //se o documento eh valido retorna true
+        if(this == o){
+            return true;
+        }
+
+        //se o documento eh null, ou nao eh o mesmo tipo, retorna false
+        if(o == null || this.getClass() != o.getClass()){
+            return false;
+        }
+
+        //verifica se eh um documento valido
+        Documento outro = (Documento) o;
+
+        //verifica se os 3 dados do documento funcionam
+        if(this.paginas == outro.paginas && this.codigoCurso == outro.codigoCurso && this.criador.equals(outro.criador)){
+            return true;
+        }else {
+            return false;
+            }
+    }
     
-    //hascode
 }
