@@ -24,8 +24,8 @@ public abstract class Documento {
         return this.paginas;
     }
 
-    public codigocurso getcodigocurso(){
-        return this.codigocurso;
+    public CodigoCurso getCodigoCurso(){
+        return this.codigoCurso;
     }
 
     public String getCriador(){
