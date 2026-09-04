@@ -20,6 +20,17 @@ public abstract class Documento {
     }
 
     //getters
+    public int getPaginas(){
+        return this.paginas;
+    }
+
+    public codigocurso getcodigocurso(){
+        return this.codigocurso;
+    }
+
+    public String getCriador(){
+        return this.criador;
+    }
     
     //hascode
 }
