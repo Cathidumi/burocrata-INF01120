@@ -55,5 +55,11 @@ public abstract class Documento {
             return false;
             }
     }
+
+    //hashcode
+    @Override
+    public int hashCode(){
+        return Objects.hash(criador, codigoCurso, paginas);
+    }
     
 }
