@@ -1,5 +1,8 @@
 package estudantes.entidades;
 
+import professor.entidades.CodigoCurso; //obrigatório para o construtor
+import java.util.Arrays;                //compara vetores
+
 //extensão de documento
 public class Ata extends Documento{
     private int numero;
