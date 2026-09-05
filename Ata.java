@@ -2,6 +2,7 @@ package estudantes.entidades;
 
 import professor.entidades.CodigoCurso; //obrigatório para o construtor
 import java.util.Arrays;                //compara vetores
+import java.util.Objects;               // OBRIGATÓRIO PARA O HASHCODE
 
 //extensão de documento
 public class Ata extends Documento{
@@ -16,7 +17,6 @@ public class Ata extends Documento{
         this.texto = texto;
         this.presentes = presentes;
     }   
-}
 
 //getters
     public int getNumero(){
@@ -44,20 +44,24 @@ public class Ata extends Documento{
             return false;
         }
 
-        /* começo de código gerado por IA */
         // verifica se os atributos da classe mãe são iguais
         if (!super.equals(o)) {
             return false;
         }
-        /* fim de código gerado por IA */
         
         // verifica se Ata é uma Ata valida
         Ata outro = (Ata) o;
 
-        /* começo de código gerado por IA */
+        //FEITO COM AJUDA DE IA *********************************
         // compara os 3 atributos de Ata em um único retorno usando &&
         return this.numero == outro.numero && 
-               this.texto.equals(outro.texto) && 
-               Arrays.equals(this.presentes, outro.presentes);
-        /* fim de código gerado por IA */
+            this.texto.equals(outro.texto) && 
+            Arrays.equals(this.presentes, outro.presentes);
+    }//******************************************************
+
+    //hashcode
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), this.numero, this.texto, Arrays.hashCode(this.presentes)); //FEITO COM AJUDA DE IA
     }
+}
