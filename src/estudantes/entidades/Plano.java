@@ -20,18 +20,22 @@ public class Plano extends DocumentoAcademico {
 
     @Override
     public boolean equals(Object o) {
+        // se for a mesma referência retorna true
         if (this == o) {
             return true;
         }
 
+        // se for nulo, ou de classe diferente do objeto retorna false
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
 
+        //compara com os atributos herdados e retorno falso se não for equivalente
         if (!super.equals(o)) {
             return false;
         }
 
+        //compara os 3 atributos da subclasse
         Plano outro = (Plano) o;
 
         return this.responsavel.equals(outro.responsavel) && Arrays.equals(this.planejamento, outro.planejamento);

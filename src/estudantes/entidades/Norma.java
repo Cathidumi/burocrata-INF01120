@@ -1,6 +1,7 @@
 package estudantes.entidades;
 
 import professor.entidades.CodigoCurso;
+import java.util.Objects;
 
 public class Norma extends DocumentoAdministrativo {
     private int numero;
@@ -38,5 +39,10 @@ public class Norma extends DocumentoAdministrativo {
             return false;
         }
         return true;
+    }
+
+    @Override 
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), numero, valido, texto);
     }
 }
