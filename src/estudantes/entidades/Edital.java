@@ -1,23 +1,20 @@
 package estudantes.entidades;
 
 import professor.entidades.CodigoCurso;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Classe que representa uma Norma.
+ * Classe que representa um Edital.
  * @author Cauã Miranda
  */
-public class Norma extends DocumentoAdministrativo {
-    private int numero;
-    private boolean valido;
-    private String texto;
+public class Edital extends Norma {
+    String[] responsaveis;
 
-    public Norma(String criador, CodigoCurso codigoCurso, int paginas, int numero, boolean valido, String texto) {
-        super(criador, codigoCurso, paginas);
-        this.numero = numero;
-        this.valido = valido;
-        this.texto = texto;
-
+	public Edital(String criador, CodigoCurso codigoCurso, int paginas, int numero, boolean valido, String texto, String[] responsaveis) {
+		
+        super(criador, codigoCurso, paginas, numero, valido, texto);
+        this.responsaveis = responsaveis;
     }
 
     @Override
@@ -37,9 +34,10 @@ public class Norma extends DocumentoAdministrativo {
             return false;
         }
 
-        //compara os 3 atributos da subclasse
-        Norma outro = (Norma) o;
-        if (this.numero != outro.numero || this.valido != outro.valido || !this.texto.equals(outro.texto)) {
+        //compara os atributos da subclasse
+        Edital outro = (Edital) o;
+        // usa arrays equals para comparar os arrays de responsaveis
+        if (!Arrays.equals(this.responsaveis, outro.responsaveis)) {
             return false;
         }
         return true;
@@ -47,6 +45,6 @@ public class Norma extends DocumentoAdministrativo {
 
     @Override 
     public int hashCode() {
-        return Objects.hash(super.hashCode(), numero, valido, texto);
+        return Objects.hash(super.hashCode(), Arrays.hashCode(responsaveis));
     }
 }

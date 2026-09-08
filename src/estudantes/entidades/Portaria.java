@@ -4,21 +4,17 @@ import professor.entidades.CodigoCurso;
 import java.util.Objects;
 
 /**
- * Classe que representa uma Norma.
+ * Classe que representa uma Portaria.
  * @author Cauã Miranda
  */
-public class Norma extends DocumentoAdministrativo {
-    private int numero;
-    private boolean valido;
-    private String texto;
+public class Portaria extends Norma {
+    private int anoInicio;
 
-    public Norma(String criador, CodigoCurso codigoCurso, int paginas, int numero, boolean valido, String texto) {
-        super(criador, codigoCurso, paginas);
-        this.numero = numero;
-        this.valido = valido;
-        this.texto = texto;
-
-    }
+	public Portaria(String criador, CodigoCurso codigoCurso, int paginas, int numero, boolean valido, String texto,
+			int anoInicio) {
+		super(criador, codigoCurso, paginas, numero, valido, texto);
+		this.anoInicio = anoInicio;
+	}
 
     @Override
     public boolean equals(Object o) {
@@ -37,9 +33,9 @@ public class Norma extends DocumentoAdministrativo {
             return false;
         }
 
-        //compara os 3 atributos da subclasse
-        Norma outro = (Norma) o;
-        if (this.numero != outro.numero || this.valido != outro.valido || !this.texto.equals(outro.texto)) {
+        //compara os atributos da subclasse
+        Portaria outro = (Portaria) o;
+        if (this.anoInicio != outro.anoInicio) {
             return false;
         }
         return true;
@@ -47,6 +43,6 @@ public class Norma extends DocumentoAdministrativo {
 
     @Override 
     public int hashCode() {
-        return Objects.hash(super.hashCode(), numero, valido, texto);
+        return Objects.hash(super.hashCode(), anoInicio);
     }
 }
