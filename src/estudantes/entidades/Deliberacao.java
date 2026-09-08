@@ -37,7 +37,12 @@ public abstract class Deliberacao extends DocumentoAdministrativo{
 
         //verifica se Deliberacao é valido
         Deliberacao outra = (Deliberacao) o;
-
-
-
+        return this.texto.equals(outro.texto);  //retorna o texto comparando-os
     }
+    
+    //hashcode
+    @Override   
+    public int hashCode(){
+        return Object.hash(super.hashCode(), this.texto);
+     }
+}
