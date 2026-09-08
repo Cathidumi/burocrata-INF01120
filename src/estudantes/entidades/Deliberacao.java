@@ -1,6 +1,7 @@
 package estudantes.entidades;
 
 import professor.entidades.CodigoCurso;
+import java.util.Objects;
 
 //extensão de DocumentoAdministrativo
 public abstract class Deliberacao extends DocumentoAdministrativo{
