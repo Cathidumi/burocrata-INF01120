@@ -20,6 +20,20 @@ public class Norma extends DocumentoAdministrativo {
 
     }
 
+    //getters
+    public boolean isValido() {
+        return valido;
+    }
+
+/*     public int getNumero() {
+        return numero;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+ */
+
     @Override
     public boolean equals(Object o) {
         // se for a mesma referência retorna true
