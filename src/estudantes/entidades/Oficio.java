@@ -13,7 +13,7 @@ public class Oficio extends Deliberacao{
     }
 
     //getter
-    public getDestinatario(){
+    public String getDestinatario(){
         return this.destinatario;
     }
 
@@ -43,6 +43,6 @@ public class Oficio extends Deliberacao{
     //hashcode
     @Override
     public int hashCode(){
-        return Object.hash(super.hashCode(), this.destinatario);
+        return Objects.hash(super.hashCode(), this.destinatario);
     }
 }
