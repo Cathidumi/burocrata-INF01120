@@ -62,13 +62,24 @@ public class Burocrata {
     public void trabalhar(){
         //tenta encaixar documentos dos montes nos processos aberto
         private void encaixarDocumentosDosMontes(){
-            for (CodigoCurso codigo : CodigoCurso.values()){
-               
+            for (CodigoCurso codigo : CodigoCurso.values()){    //percorre os cursos
+                Documento[] documentos = universidade.pegarCopiaDoMonteDoCurso(codigo);    //percorre os documentos
+                
+                //tenta encaixar em algum processo 
+                for(Documento doc : documentos){
+                    int indiceProcesso = encontrarProcessoCompativel(doc);
 
-        
-       
-
-        
+                    //remove do monte e adiciona ao processo
+                    if(indiceProcesso >= 0) {
+                        Processo p = mesa.getProcesso(indiceProcesso);    
+                        if(universidade.removerDocumentoDoMonteDoCurso(doc, codigo)){
+                            p.adicionarDocumento(doc);
+                        }
+                    }
+                    //se não tiver espaço, o documento mantém no monte
+                }
+            }
+        }
     }
     
     /**
