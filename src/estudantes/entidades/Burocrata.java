@@ -1,7 +1,7 @@
 package estudantes.entidades;
 
 import professor.entidades.*;
-
+import java.util.*;
 /**
  * Classe que traz a lógica do algoritmo de organização e despacho de processos.
  * <br><br>
@@ -23,6 +23,10 @@ public class Burocrata {
      * @param m mesa com os processos
      * @param u universidade com os montes dos cursos e a secretaria
      */
+    
+    //limite de páginas por processo (controlado pela secretaria)
+    private static final int LIMITE_PAGINAS = 250;
+    
     public Burocrata(Mesa m, Universidade u){
         this.mesa = m;
         this.universidade = u;
@@ -56,6 +60,14 @@ public class Burocrata {
      * @see professor.entidades.Universidade#devolverDocumentoParaMonteDoCurso(estudantes.entidades.Documento, professor.entidades.CodigoCurso) 
      */
     public void trabalhar(){
+        //tenta encaixar documentos dos montes nos processos aberto
+        private void encaixarDocumentosDosMontes(){
+            for (CodigoCurso codigo : CodigoCurso.values()){
+               
+
+        
+       
+
         
     }
     
