@@ -21,6 +21,7 @@ public class Burocrata {
     private static final int LIMITE_PAGINAS = 250;
     //margem de segurança: com essa quantidade de páginas ainda livres, já despacha
     private static final int MARGEM_DESPACHO = 20;
+<<<<<<< HEAD
 
     //faixa de valores possíveis para a exigência de "bom lote" (ver calcularMinimoParaDespacho)
     private static final int MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO = 3;  //pouca oferta de documentos: não vale esperar por um lote que pode nunca se formar
