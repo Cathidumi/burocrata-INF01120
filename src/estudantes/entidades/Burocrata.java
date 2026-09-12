@@ -75,9 +75,20 @@ public class Burocrata {
      * processo compatível da mesa. Se não houver processo compatível, o
      * documento simplesmente permanece no monte para ser tentado no próximo
      * ciclo.
+     * <br><br>
+     * Os cursos são visitados em ordem decrescente de tamanho do monte, e não
+     * na ordem fixa da enumeração. Isso evita que os cursos de graduação
+     * (maioria entre os 10 cursos) sempre tomem a frente e ocupem todos os
+     * processos vazios da mesa antes que os cursos de pós-graduação sejam
+     * avaliados, o que causaria acúmulo permanente de documentos no monte
+     * desses cursos.
      */
     private void encaixarDocumentosDosMontes(){
-        for(CodigoCurso codigo : CodigoCurso.values()){    //percorre os cursos
+        CodigoCurso[] cursosPorPrioridade = CodigoCurso.values();
+        Arrays.sort(cursosPorPrioridade, (a, b) ->
+            universidade.contarDocumentosNoMonteDoCurso(b) - universidade.contarDocumentosNoMonteDoCurso(a));
+
+        for(CodigoCurso codigo : cursosPorPrioridade){    //percorre os cursos, maior monte primeiro
             Documento[] documentos = universidade.pegarCopiaDoMonteDoCurso(codigo);
 
             //tenta encaixar cada documento do monte em algum processo
