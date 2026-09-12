@@ -21,8 +21,13 @@ public class Burocrata {
     private static final int LIMITE_PAGINAS = 250;
     //margem de segurança: com essa quantidade de páginas ainda livres, já despacha
     private static final int MARGEM_DESPACHO = 20;
-    //quantidade de documentos que já é considerada um bom lote para despachar
-    private static final int MIN_DOCUMENTOS_PARA_DESPACHO = 5;
+
+    //faixa de valores possíveis para a exigência de "bom lote" (ver calcularMinimoParaDespacho)
+    private static final int MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO = 3;  //pouca oferta de documentos: não vale esperar por um lote que pode nunca se formar
+    private static final int MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO = 20; //oferta alta: aproveita para formar lotes maiores e mais eficientes por despacho
+    //faixa de backlog (documentos pendentes nos montes) usada para interpolar entre os dois valores acima
+    private static final int BACKLOG_LIMIAR_BAIXO = 300;
+    private static final int BACKLOG_LIMIAR_ALTO = 5000;
 
     /**
      * Construtor de Burocrata.
@@ -289,8 +294,16 @@ public class Burocrata {
      * pena mandar para a secretaria: processos quase cheios, processos com um
      * bom lote de documentos, ou processos travados (que já não conseguem
      * aceitar mais nenhum documento).
+     * <br><br>
+     * A exigência de "bom lote" é recalculada uma vez por ciclo com base no
+     * volume de documentos pendentes nos montes (ver
+     * {@link #calcularMinimoParaDespacho()}), então quanto mais documentos
+     * estiverem esperando, maior o lote exigido para aproveitar melhor cada
+     * processo despachado.
      */
     private void despacharProcessosProntos(){
+        int minimoParaDespacho = calcularMinimoParaDespacho();
+
         for(int i = 0; i < 5; i++){
             Processo processo = mesa.getProcesso(i);
             if(processo == null || processo.contarDocumentos() == 0){
@@ -299,13 +312,60 @@ public class Burocrata {
 
             int paginas = somarPaginas(processo);
             boolean quaseCheio = paginas >= LIMITE_PAGINAS - MARGEM_DESPACHO;
-            boolean loteBom = processo.contarDocumentos() >= MIN_DOCUMENTOS_PARA_DESPACHO;
+            boolean loteBom = processo.contarDocumentos() >= minimoParaDespacho;
             boolean travado = estaTravado(processo);
 
             if(quaseCheio || loteBom || travado){
                 universidade.despachar(processo);
             }
         }
+    }
+
+    /**
+     * Calcula, com base no total de documentos pendentes nos montes de todos
+     * os cursos, o tamanho de lote que já vale a pena despachar.
+     * <br><br>
+     * Quanto maior o backlog, maior a exigência: com bastante documento à
+     * disposição, vale a pena esperar um pouco mais para formar lotes maiores
+     * por processo, o que pesa mais na fórmula de eficiência do que o pequeno
+     * atraso causado. Quando o backlog está baixo (pouca oferta de
+     * documentos), a exigência cai para não deixar um processo esperando
+     * indefinidamente por um lote que talvez nunca se forme.
+     * <br><br>
+     * O resultado varia entre {@link #MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO} e
+     * {@link #MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO}, interpolando linearmente
+     * entre {@link #BACKLOG_LIMIAR_BAIXO} e {@link #BACKLOG_LIMIAR_ALTO}.
+     *
+     * @return quantidade mínima de documentos para considerar um processo
+     * como um bom lote para despacho
+     */
+    private int calcularMinimoParaDespacho(){
+        int backlog = contarDocumentosPendentes();
+
+        if(backlog <= BACKLOG_LIMIAR_BAIXO){
+            return MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO;
+        }
+        if(backlog >= BACKLOG_LIMIAR_ALTO){
+            return MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO;
+        }
+
+        double proporcao = (double)(backlog - BACKLOG_LIMIAR_BAIXO) / (BACKLOG_LIMIAR_ALTO - BACKLOG_LIMIAR_BAIXO);
+        int intervalo = MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO - MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO;
+        return MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO + (int) Math.round(proporcao * intervalo);
+    }
+
+    /**
+     * Soma a quantidade de documentos pendentes nos montes de todos os
+     * cursos, ou seja, ainda não colocados em nenhum processo da mesa.
+     *
+     * @return total de documentos pendentes em todos os montes
+     */
+    private int contarDocumentosPendentes(){
+        int total = 0;
+        for(CodigoCurso codigo : CodigoCurso.values()){
+            total += universidade.contarDocumentosNoMonteDoCurso(codigo);
+        }
+        return total;
     }
 
     /**
