@@ -22,7 +22,7 @@ public class Burocrata {
     //margem de segurança: com essa quantidade de páginas ainda livres, já despacha
     private static final int MARGEM_DESPACHO = 20;
     //quantidade de documentos que já é considerada um bom lote para despachar
-    private static final int MIN_DOCUMENTOS_PARA_DESPACHO = 5;
+    private static final int MIN_DOCUMENTOS_PARA_DESPACHO = 12;
 
     /**
      * Construtor de Burocrata.
