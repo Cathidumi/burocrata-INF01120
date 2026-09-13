@@ -10,7 +10,6 @@ import java.util.*;
  * processos, mas eles não serão invocados diretamente pelo simulador e devem
  * respeitar propriedades de encapsulamento e coesão.
  *
- * @author coloque os nomes dos autores aqui
  */
 public class Burocrata {
     private int estresse = 0;
@@ -21,14 +20,13 @@ public class Burocrata {
     private static final int LIMITE_PAGINAS = 250;
     //margem de segurança: com essa quantidade de páginas ainda livres, já despacha
     private static final int MARGEM_DESPACHO = 20;
-<<<<<<< HEAD
 
     //faixa de valores possíveis para a exigência de "bom lote" (ver calcularMinimoParaDespacho)
     private static final int MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO = 3;  //pouca oferta de documentos: não vale esperar por um lote que pode nunca se formar
     private static final int MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO = 20; //oferta alta: aproveita para formar lotes maiores e mais eficientes por despacho
     //faixa de backlog (documentos pendentes nos montes) usada para interpolar entre os dois valores acima
     private static final int BACKLOG_LIMIAR_BAIXO = 300;
-    private static final int BACKLOG_LIMIAR_ALTO = 5000;
+    private static final int BACKLOG_LIMIAR_ALTO = 5000; 
 
     /**
      * Construtor de Burocrata.
@@ -321,7 +319,8 @@ public class Burocrata {
             }
         }
     }
-
+    
+    /* começo de código gerado por IA */
     /**
      * Calcula, com base no total de documentos pendentes nos montes de todos
      * os cursos, o tamanho de lote que já vale a pena despachar.
@@ -354,6 +353,7 @@ public class Burocrata {
         int intervalo = MIN_DOCUMENTOS_PARA_DESPACHO_MAXIMO - MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO;
         return MIN_DOCUMENTOS_PARA_DESPACHO_MINIMO + (int) Math.round(proporcao * intervalo);
     }
+    /* fim de código gerado por IA */
 
     /**
      * Soma a quantidade de documentos pendentes nos montes de todos os
