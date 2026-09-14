@@ -178,13 +178,28 @@ public class Burocrata {
      * @return true se alguma regra administrativa seria descumprida
      */
     private boolean teriaProblema(Documento[] documentos){
-        return temMisturaDeGraduacaoEPos(documentos)
-            || temMisturaDeAdminsEAcademicos(documentos)
-            || processoSoComAtas(documentos)
-            || temDocSubstancialJuntos(documentos)
-            || temCircularEOficioSemDestinoComum(documentos)
-            || temDiplomaComDocIncompativel(documentos)
-            || temAtestadosDeCatDiferentes(documentos);
+        if(temMisturaDeGraduacaoEPos(documentos)){
+            return true;
+        }
+        if(temMisturaDeAdminsEAcademicos(documentos)){
+            return true;
+        }
+        if(processoSoComAtas(documentos)){
+            return true;
+        }
+        if(temDocSubstancialJuntos(documentos)){
+            return true;
+        }
+        if(temCircularEOficioSemDestinoComum(documentos)){
+            return true;
+        }
+        if(temDiplomaComDocIncompativel(documentos)){
+            return true;
+        }
+        if(temAtestadosDeCatDiferentes(documentos)){
+            return true;
+        }
+        return false;
     }
 
     private boolean temMisturaDeGraduacaoEPos(Documento[] documentos){
