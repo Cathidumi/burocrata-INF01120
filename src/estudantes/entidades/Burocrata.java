@@ -178,6 +178,16 @@ public class Burocrata {
      * @return true se alguma regra administrativa seria descumprida
      */
     private boolean teriaProblema(Documento[] documentos){
+        return temMisturaDeGraduacaoEPos(documentos)
+            || temMisturaDeAdminsEAcademicos(documentos)
+            || processoSoComAtas(documentos)
+            || temDocSubstancialJuntos(documentos)
+            || temCircularEOficioSemDestinoComum(documentos)
+            || temDiplomaComDocIncompativel(documentos)
+            || temAtestadosDeCatDiferentes(documentos);
+    }
+
+    private boolean temMisturaDeGraduacaoEPos(Documento[] documentos){
         //graduação x pós-graduação
         boolean graduacao = false, posgraduacao = false;
         for(Documento doc : documentos){
@@ -190,7 +200,10 @@ public class Burocrata {
         if(graduacao && posgraduacao){
             return true;
         }
+        return false;
+    }
 
+    private boolean temMisturaDeAdminsEAcademicos(Documento[] documentos){
         //administrativos x acadêmicos
         boolean administrativos = false, academicos = false;
         for(Documento doc : documentos){
@@ -204,7 +217,10 @@ public class Burocrata {
         if(administrativos && academicos){
             return true;
         }
+        return false;
+    }
 
+    private boolean processoSoComAtas(Documento[] documentos){
         //processo só com atas
         boolean apenasAtas = true;
         for(Documento doc : documentos){
@@ -215,7 +231,10 @@ public class Burocrata {
         if(apenasAtas){
             return true;
         }
+        return false;
+    }
 
+    private boolean temDocSubstancialJuntos(Documento[] documentos){
         //portarias e editais substanciais precisam estar sozinhos no processo
         boolean documentoSubstancialValido = false;
         for(Documento doc : documentos){
@@ -229,7 +248,10 @@ public class Burocrata {
         if(documentoSubstancialValido && documentos.length > 1){
             return true;
         }
+        return false;
+    }
 
+    private boolean temCircularEOficioSemDestinoComum(Documento[] documentos){
         //circulares e ofícios precisam ter destinatário em comum
         HashMap<String, Integer> destinatarios = new HashMap<>();
         int contagemDeOficiosECirculares = 0;
@@ -258,7 +280,10 @@ public class Burocrata {
                 return true;
             }
         }
+        return false;
+    }
 
+    private boolean temDiplomaComDocIncompativel(Documento[] documentos){
         //diplomas só podem conviver com diplomas, certificados e atas
         boolean diplomas = false, documentosNaoDiplomasCertificadosAtas = false;
         for(Documento doc : documentos){
@@ -271,7 +296,10 @@ public class Burocrata {
         if(diplomas && documentosNaoDiplomasCertificadosAtas){
             return true;
         }
+        return false;
+    }
 
+    private boolean temAtestadosDeCatDiferentes(Documento[] documentos){
         //atestados de categorias diferentes não podem se misturar
         String categoriaDoPrimeiroAtestadoEncontrado = null;
         for(Documento doc : documentos){
@@ -284,7 +312,6 @@ public class Burocrata {
                 }
             }
         }
-
         return false;
     }
 
